@@ -1,0 +1,35 @@
+---
+-  name: Do Lab 2
+   hosts: all
+   become: yes
+   tasks:
+     -  name: Create user consultant
+        user:
+          name: consultant
+          state: present
+     -  name: Create user supervisor
+        user:
+          name: supervisor
+          state: present
+     -  name: Create .ssh directory for consultant
+        file:
+          path: /home/consultant/.ssh
+          owner: consultant
+          group: consultant
+          mode: 0755
+     -  name: Create .ssh directory for supervisor
+        file:
+          path: /home/supervisor/.ssh
+          owner: supervisor
+          group: supervisor
+          mode: 0755
+     -  name: Copy authorized_key for consultant
+        copy:
+          src: /home/ansible/keys/consultant/authorized_keys
+          dest: /home/consultant/.ssh/authorized_keys
+          mode: 0600
+     -  name: Copy authorized_key for supervisor
+        copy:
+          src: /home/ansible/keys/consultant/authorized_keys
+          dest: /home/superviosr/.ssh/authorized_keys
+          mode: 0600
